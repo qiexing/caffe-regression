@@ -21,3 +21,6 @@ prediction folder
 
 test the trained caffe model
 
+current result
+![](predict_result.png)
+
