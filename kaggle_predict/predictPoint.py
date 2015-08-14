@@ -8,7 +8,7 @@ sys.path.append('/home/hkk/CurrentWork/caffe-master/python') # change it !!!!
 
 import caffe
 MODEL_FILE = 'examples/kaggle_prototxt/fkp_deploy.prototxt'
-PRETRAINED = 'examples/kaggle_prototxt/model/fkp_iter_5000.caffemodel' 
+PRETRAINED = 'examples/kaggle_prototxt/model/fkp_iter_15000.caffemodel' 
 height = 96
 
 
