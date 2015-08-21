@@ -4,7 +4,6 @@ caffe-regression examples ,kaggle face keypoint detection
 data folder
 
 you can download data from https://www.kaggle.com/c/facial-keypoints-detection/data
-
 the data process code are mainly from
 
 http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/
