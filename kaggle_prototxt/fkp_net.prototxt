@@ -5,7 +5,7 @@ layer {
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "/data/image_server/user/wangpeng/github/caffe-regression/kaggle_fkp_data/train_data_list.txt"
+    source: "caffe-regression/kaggle_fkp_data/train_data_list.txt"
     batch_size: 128
     shuffle: true
   }
@@ -17,7 +17,7 @@ layer {
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "/data/image_server/user/wangpeng/github/caffe-regression/kaggle_fkp_data/val_data_list.txt"
+    source: "caffe-regression/kaggle_fkp_data/val_data_list.txt"
     batch_size: 540
   }
   include: { phase: TEST }
