@@ -1,34 +1,42 @@
 name: "fkp_net"
-layers {
+layer {
   name: "MyData"
-  type: HDF5_DATA
+  type: "HDF5Data"
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "data/kaggle_fkp_data/train_data_list.txt"
+    source: "caffe-regression/kaggle_fkp_data/train_data_list.txt"
     batch_size: 128
     shuffle: true
   }
   include: { phase: TRAIN }
 }
-layers {
+layer {
   name: "MyData"
-  type: HDF5_DATA
+  type: "HDF5Data"
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "data/kaggle_fkp_data/val_data_list.txt"
+    source: "caffe-regression/kaggle_fkp_data/val_data_list.txt"
     batch_size: 540
   }
   include: { phase: TEST }
 }
-layers {
+layer {
   name: "conv1"
-  type: CONVOLUTION
+  type: "Convolution"
   bottom: "data"
   top: "conv1"
-  blobs_lr: 1
-  blobs_lr: 2
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
   convolution_param {
     num_output: 20
     kernel_size: 5
@@ -43,16 +51,15 @@ layers {
     }
   }
 }
-layers {
+layer {
   name: "relu1"
-  type: RELU
+  type: "ReLU"
   bottom: "conv1"
   top: "conv1"
 }
-
-layers {
+layer {
   name: "pool1"
-  type: POOLING
+  type: "Pooling"
   bottom: "conv1"
   top: "pool1"
   pooling_param {
@@ -61,7 +68,6 @@ layers {
     stride: 2
   }
 }
-
 layer {
   name: "dropout1"
   type: "Dropout"
@@ -71,14 +77,21 @@ layer {
     dropout_ratio: 0.1
   }
 }
-
-layers {
+layer {
   name: "conv2"
-  type: CONVOLUTION
+  type: "Convolution"
   bottom: "pool1"
   top: "conv2"
-  blobs_lr: 1
-  blobs_lr: 2
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
   convolution_param {
     num_output: 48
     kernel_size: 5
@@ -86,7 +99,6 @@ layers {
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
-
     }
     bias_filler {
       type: "constant"
@@ -94,16 +106,15 @@ layers {
     }
   }
 }
-layers {
+layer {
   name: "relu2"
-  type: RELU
+  type: "ReLU"
   bottom: "conv2"
   top: "conv2"
 }
-
-layers {
+layer {
   name: "pool2"
-  type: POOLING
+  type: "Pooling"
   bottom: "conv2"
   top: "pool2"
   pooling_param {
@@ -112,7 +123,6 @@ layers {
     stride: 2
   }
 }
-
 layer {
   name: "dropout2"
   type: "Dropout"
@@ -122,14 +132,21 @@ layer {
     dropout_ratio: 0.3
   }
 }
-
-layers {
+layer {
   name: "conv3"
-  type: CONVOLUTION
+  type: "Convolution"
   bottom: "pool2"
   top: "conv3"
-  blobs_lr: 1
-  blobs_lr: 2
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
   convolution_param {
     num_output: 64
     kernel_size: 3
@@ -145,14 +162,12 @@ layers {
     }
   }
  }
- layers {
+ layer {
   name: "relu3"
-  type: RELU
+  type: "ReLU"
   bottom: "conv3"
   top: "conv3"
 }
-
-
 layer {
   name: "dropout3"
   type: "Dropout"
@@ -162,17 +177,23 @@ layer {
     dropout_ratio: 0.5
   }
 }
-
-
-layers {
+layer {
   name: "fc5"
-  type: INNER_PRODUCT
+  type: "InnerProduct"
   bottom: "conv3"
   top: "fc5"
-  blobs_lr: 1
-  blobs_lr: 2
-  weight_decay: 1
-  weight_decay: 0
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
   inner_product_param {
     num_output: 500
     weight_filler {
@@ -185,7 +206,6 @@ layers {
     }
   }
 }
-
 layer {
   name: "drop4"
   type: "Dropout"
@@ -195,17 +215,23 @@ layer {
     dropout_ratio: 0.5
   }
 }
-
-
-layers {
+layer {
   name: "fc6"
-  type: INNER_PRODUCT
+  type: "InnerProduct"
   bottom: "fc5"
   top: "fc6"
-  blobs_lr: 1
-  blobs_lr: 2
-  weight_decay: 1
-  weight_decay: 0
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
   inner_product_param {
     num_output: 30
     weight_filler {
@@ -218,10 +244,9 @@ layers {
     }
   }
 }
-
-layers {
+layer {
   name: "loss"
-  type: EUCLIDEAN_LOSS
+  type: "EuclideanLoss"
   bottom: "fc6"
   bottom: "label"
   top: "loss"

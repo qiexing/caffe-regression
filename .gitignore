@@ -1,0 +1,5 @@
+*.caffemodel
+*.solverstate
+*.h5
+*.txt
+data/

@@ -1,5 +1,5 @@
 # The training protocol buffer definition
-net: "examples/kaggle_prototxt/fkp_net.prototxt"
+net: "caffe-regression/kaggle_prototxt/fkp_net.prototxt"
 # The testing protocol buffer definition
 # test_iter specifies how many forward passes the test should carry out.
 # In the case of facialpoint, we have test batch size 80 and 43 test iterations,
@@ -8,7 +8,7 @@ test_iter: 1
 # Carry out testing every 500 training iterations.
 test_interval: 500
 # The base learning rate, momentum and the weight decay of the network.
-base_lr: 0.003
+base_lr: 0.001
 weight_decay : 0.0005
 solver_type : NESTEROV
 momentum: 0.9
@@ -23,7 +23,7 @@ display: 100
 max_iter: 1000000
 # snapshot intermediate results
 snapshot: 5000
-snapshot_prefix: "examples/kaggle_prototxt/model/fkp"
+snapshot_prefix: "caffe-regression/kaggle_prototxt/model/fkp"
 # solver mode: CPU or GPU
 solver_mode: GPU
 
